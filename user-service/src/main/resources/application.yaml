@@ -1,0 +1,65 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user-service
+
+  multipart:
+    enabled: true
+    max-file-size: 5MB
+    max-request-size: 5MB
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/eshop?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # Use 'validate' or 'none' in prod
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        format_sql: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+  mail: # Optional - fallback for dev email testing
+    host: smtp.example.com
+    port: 587
+    username: your_email@example.com
+    password: your_password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+jwt:
+  secret: lgT621AKlEP2TjoaW9+4dp0B7ulkrEgXOJSHFiAJIhg=   #move to environment variable in prod
+  expiration: 86400000 # 1 day in milliseconds
+
+logging:
+  level:
+    root: INFO
+    com.yourorg.userservice: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

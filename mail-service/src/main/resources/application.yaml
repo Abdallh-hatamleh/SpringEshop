@@ -1,0 +1,27 @@
+#spring.application.name=mail-service
+
+spring:
+  application:
+    name: mail-service
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/eshop?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+spring.config.import: optional:file:.env
+
+jwt:
+  secret: lgT621AKlEP2TjoaW9+4dp0B7ulkrEgXOJSHFiAJIhg=   #move to environment variable in prod
+  expiration: 86400000 # 1 day in milliseconds
