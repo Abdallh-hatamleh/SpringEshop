@@ -4,16 +4,19 @@ import Orange.Eshop.UserService.Configuration.JwtProperties;
 import Orange.Eshop.UserService.Entities.User;
 import Orange.Eshop.UserService.Repositories.UserRepository;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,13 +26,54 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
+@Slf4j
 @Service
 public class JwtService {
     private final JwtProperties jwtProperties;
 
+    private final SecretKey resetSecretKey = Keys.hmacShaKeyFor("idkwhattouseforthissecret1231235123".getBytes());
+
     private final Map<String, Long> blacklist = new ConcurrentHashMap<>();
 
     private final UserRepository userRepository;
+
+    public String generateResetToken(String email) {
+
+        log.info("email before token gen " + email);
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("type", "password_reset")
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // 1 hour
+                .signWith(resetSecretKey, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public boolean validateResetToken(String token, String expectedEmail) {
+        log.info("Validating token against expected email: {}", expectedEmail);
+
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(resetSecretKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            if (!"password_reset".equals(claims.get("type"))) {
+                log.info("Invalid token type");
+                return false;
+            }
+
+            String subject = claims.getSubject();
+            log.info("Extracted subject: [{}]", subject);
+
+            return expectedEmail.equals(subject.replace("\"", "")); // In case it's quoted like \"email\"
+        } catch (JwtException e) {
+            log.warn("Token validation failed: {}", e.getMessage());
+            return false;
+        }
+    }
+
 
     public JwtService(JwtProperties jwtProperties, UserRepository repository)
     {

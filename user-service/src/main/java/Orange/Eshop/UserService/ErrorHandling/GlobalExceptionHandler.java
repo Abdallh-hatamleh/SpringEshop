@@ -1,5 +1,7 @@
 package Orange.Eshop.UserService.ErrorHandling;
 
+import Orange.Eshop.UserService.Security.JwtService;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -49,5 +51,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleAccessDeniedExceptions(AccessDeniedException ex)
     {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error","Access denied"));
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<?> handleJwtException(JwtException e) {
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error","Invalid Token"));
     }
 }

@@ -1,4 +1,4 @@
-package Orange.Eshop.UserService.Configuration;
+package com.orange.eshop.mail_service.config;
 
 
 import org.springframework.amqp.core.Queue;
@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-    public static final String USER_REGISTERED_QUEUE = "user.registered";
+
+    public static final String USER_REGISTERD_QUEUE = "user.registered";
     public static final String PASSWORD_RESET_QUEUE = "password.reset";
 
     @Bean
@@ -20,19 +21,19 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public MessageConverter jsonMessageConverter() {
+    public Queue welcomeQueue() {
+        return new Queue(USER_REGISTERD_QUEUE,true);
+    }
+
+    @Bean
+    public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory){
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(jsonMessageConverter());
+        template.setMessageConverter(messageConverter());
         return template;
-    }
-
-    @Bean
-    public Queue userRegisteredQueue() {
-        return new Queue(USER_REGISTERED_QUEUE, true);
     }
 }

@@ -2,6 +2,7 @@ package Orange.Eshop.UserService.Services;
 
 import Orange.Eshop.UserService.DTOs.RegisterRequest;
 import Orange.Eshop.UserService.DTOs.UpdateUserRequest;
+import Orange.Eshop.UserService.DTOs.UserRegisterdEvent;
 import Orange.Eshop.UserService.DTOs.UserResponse;
 import Orange.Eshop.UserService.Entities.User;
 import Orange.Eshop.UserService.Mapper.UserMapper;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @Service
@@ -31,6 +33,18 @@ public class AuthService {
 
     private final BCryptPasswordEncoder passwordEncoder;
 
+    private final UserEventPublisher userEventPublisher;
+
+    public void updatePassword(String email, String password){
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if(userOptional.isEmpty()){
+            throw new UsernameNotFoundException("No User with that Email");
+        }
+        User user = userOptional.get();
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
+
     public void register(RegisterRequest request)
     {
         if(userRepository.existsByEmail(request.getEmail()))
@@ -42,6 +56,9 @@ public class AuthService {
         user.setEmailVerified(false);
         user.setAdmin(false);
         userRepository.save(user);
+
+        UserRegisterdEvent event = new UserRegisterdEvent(request.getName(),request.getEmail());
+        userEventPublisher.publishUserRegisteredEvent(event);
     }
 
     public UserResponse getUser(String email) {
