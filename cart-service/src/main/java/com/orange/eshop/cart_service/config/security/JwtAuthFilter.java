@@ -1,4 +1,5 @@
-package com.orange.eshop.mail_service.config.security;
+package com.orange.eshop.cart_service.config.security;
+
 
 
 import jakarta.servlet.FilterChain;
@@ -39,6 +40,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
         final String token = authHeader.substring(7);
             String username = jwtService.extractUsername(token);
+            String userName = jwtService.extractUserName(token);
+            Long userId = jwtService.extractUserId(token);
 
             if(username == null || !jwtService.isTokenValid(token,username)){
                 log.warn("Invalid token");
@@ -46,7 +49,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    username,
+                    new CustomPrincipal(userId,userName,username),
                     null,
                     null
             );

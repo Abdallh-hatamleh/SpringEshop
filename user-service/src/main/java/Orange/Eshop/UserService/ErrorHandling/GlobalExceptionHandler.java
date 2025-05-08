@@ -1,6 +1,5 @@
 package Orange.Eshop.UserService.ErrorHandling;
 
-import Orange.Eshop.UserService.Security.JwtService;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

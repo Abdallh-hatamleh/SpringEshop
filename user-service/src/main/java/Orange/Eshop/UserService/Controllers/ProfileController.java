@@ -1,11 +1,10 @@
 package Orange.Eshop.UserService.Controllers;
 
 import Orange.Eshop.UserService.DTOs.BlockUserRequest;
-import Orange.Eshop.UserService.DTOs.LoginRequest;
 import Orange.Eshop.UserService.DTOs.UpdateUserRequest;
 import Orange.Eshop.UserService.DTOs.UserResponse;
-import Orange.Eshop.UserService.Security.CustomUserDetails;
-import Orange.Eshop.UserService.Security.JwtService;
+import Orange.Eshop.UserService.config.security.CustomUserDetails;
+import Orange.Eshop.UserService.config.security.JwtService;
 import Orange.Eshop.UserService.Services.AuthService;
 //import jakarta.annotation.Resource;
 //import jakarta.validation.Path;
@@ -16,14 +15,12 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;

@@ -1,4 +1,4 @@
-package Orange.Eshop.UserService.Configuration;
+package Orange.Eshop.UserService.config;
 
 
 import org.springframework.amqp.core.Queue;

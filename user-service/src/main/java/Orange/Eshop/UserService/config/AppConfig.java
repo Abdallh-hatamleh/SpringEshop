@@ -1,4 +1,4 @@
-package Orange.Eshop.UserService.Configuration;
+package Orange.Eshop.UserService.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

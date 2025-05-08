@@ -1,8 +1,6 @@
-package Orange.Eshop.UserService.Configuration;
+package Orange.Eshop.UserService.config.security;
 
 import Orange.Eshop.UserService.ErrorHandling.CustomAuthFailHandler;
-import Orange.Eshop.UserService.Security.JwtAuthFilter;
-import Orange.Eshop.UserService.Security.JwtService;
 import Orange.Eshop.UserService.Services.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

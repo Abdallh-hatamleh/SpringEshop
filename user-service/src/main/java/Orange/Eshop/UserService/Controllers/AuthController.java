@@ -2,12 +2,11 @@ package Orange.Eshop.UserService.Controllers;
 
 import Orange.Eshop.UserService.DTOs.*;
 import Orange.Eshop.UserService.Entities.User;
-import Orange.Eshop.UserService.Security.CustomUserDetails;
+import Orange.Eshop.UserService.config.security.CustomUserDetails;
 import Orange.Eshop.UserService.Services.AuthService;
-import Orange.Eshop.UserService.Security.JwtService;
+import Orange.Eshop.UserService.config.security.JwtService;
 import Orange.Eshop.UserService.Services.UserEventPublisher;
 import io.jsonwebtoken.JwtException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.crypto.SecretKey;
 import java.util.HashMap;
 import java.util.Map;
 @Log4j2

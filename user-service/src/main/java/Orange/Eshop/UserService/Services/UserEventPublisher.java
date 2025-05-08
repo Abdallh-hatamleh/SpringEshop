@@ -1,6 +1,6 @@
 package Orange.Eshop.UserService.Services;
 
-import Orange.Eshop.UserService.Configuration.RabbitMQConfig;
+import Orange.Eshop.UserService.config.RabbitMQConfig;
 import Orange.Eshop.UserService.DTOs.PasswordResetEvent;
 import Orange.Eshop.UserService.DTOs.UserRegisterdEvent;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

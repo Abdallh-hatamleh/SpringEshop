@@ -1,7 +1,7 @@
 package Orange.Eshop.UserService.Services;
 
 import Orange.Eshop.UserService.Repositories.UserRepository;
-import Orange.Eshop.UserService.Security.CustomUserDetails;
+import Orange.Eshop.UserService.config.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

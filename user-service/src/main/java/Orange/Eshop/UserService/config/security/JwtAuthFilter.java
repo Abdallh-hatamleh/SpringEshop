@@ -1,4 +1,4 @@
-package Orange.Eshop.UserService.Security;
+package Orange.Eshop.UserService.config.security;
 
 import Orange.Eshop.UserService.Services.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
@@ -11,11 +11,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @Log4j2
 @RequiredArgsConstructor

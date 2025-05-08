@@ -3,8 +3,10 @@ package com.orange.eshop.mail_service.service;
 import com.orange.eshop.mail_service.config.RabbitMQConfig;
 import com.orange.eshop.mail_service.dto.PasswordResetEvent;
 import com.orange.eshop.mail_service.dto.UserRegisteredEvent;
+import com.rabbitmq.client.Channel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +15,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MailEventsListener {
 
+
     private final MailService mailService;
 
     @RabbitListener(queues = RabbitMQConfig.USER_REGISTERD_QUEUE)
-    public void handleWelcomeMail(UserRegisteredEvent event){
-        try{
+    public void handleWelcomeMail(UserRegisteredEvent event, Channel channel , Message message){
+//        try{
+            if(event.getEmail().equals("string.com")){
+                throw new RuntimeException("test case fail");
+            }
             log.info("welcome mail to "+ event.getEmail() +  " initiated");
             mailService.sendMail(event.getEmail(),"Welcome!","Hello! " + event.getName() + ", Thank you for signing up for Orange Eshop!");
             log.info("welcome mail to "+ event.getEmail() +  " Sent");
-        } catch (Exception e) {
-            log.error("Failed to send email to {}: {}", event.getEmail(), e.getMessage());
-        }
+//        } catch (Exception e) {
+//            log.error("Failed to send email to {}: {}", event.getEmail(), e.getMessage());
+//        }
 
     }
     @RabbitListener(queues = RabbitMQConfig.PASSWORD_RESET_QUEUE)
