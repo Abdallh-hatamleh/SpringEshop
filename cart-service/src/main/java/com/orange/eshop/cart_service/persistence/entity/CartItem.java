@@ -1,4 +1,4 @@
-package com.orange.eshop.cart_service.entity;
+package com.orange.eshop.cart_service.persistence.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

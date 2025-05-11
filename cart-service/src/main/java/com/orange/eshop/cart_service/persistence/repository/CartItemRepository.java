@@ -1,6 +1,6 @@
-package com.orange.eshop.cart_service.repository;
+package com.orange.eshop.cart_service.persistence.repository;
 
-import com.orange.eshop.cart_service.entity.CartItem;
+import com.orange.eshop.cart_service.persistence.entity.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

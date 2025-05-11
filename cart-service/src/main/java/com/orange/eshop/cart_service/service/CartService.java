@@ -7,8 +7,8 @@ import com.orange.eshop.cart_service.dto.request.UpdateCartItemRequest;
 import com.orange.eshop.cart_service.dto.response.CartItemResponse;
 import com.orange.eshop.cart_service.dto.response.CartResponse;
 import com.orange.eshop.cart_service.dto.response.ProductResponse;
-import com.orange.eshop.cart_service.entity.CartItem;
-import com.orange.eshop.cart_service.repository.CartItemRepository;
+import com.orange.eshop.cart_service.persistence.entity.CartItem;
+import com.orange.eshop.cart_service.persistence.repository.CartItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
